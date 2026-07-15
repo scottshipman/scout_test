@@ -21,8 +21,6 @@ A full-stack user management app: a Symfony REST API backed by MongoDB, and a Re
 - [Docker](https://www.docker.com/) (for the backend + MongoDB)
 - [Node.js](https://nodejs.org/) 18+ (for the frontend)
 
-You do **not** need PHP or Composer installed on your host — the backend and its dependencies are built and run entirely inside Docker.
-
 ## Setup Instructions
 
 ### 1. Start MongoDB
@@ -49,19 +47,7 @@ This builds a `php:8.4-cli` image with the `mongodb` extension and Composer, ins
 docker compose exec backend php bin/console doctrine:mongodb:schema:create
 ```
 
-The API is now live at `http://127.0.0.1:8000/api`. Sanity check:
-
-```bash
-curl http://127.0.0.1:8000/api/users
-```
-
-Useful commands:
-
-```bash
-docker compose logs -f backend           # tail logs
-docker compose exec backend php bin/console debug:router   # list routes
-docker compose down                      # stop the backend
-```
+The API is now live at `http://127.0.0.1:8000/api`. 
 
 ### 3. Start the frontend
 
@@ -106,3 +92,19 @@ Error responses use `{ "message": string, "errors"?: Record<string, string> }` w
 ## Why Docker for the Backend
 
 Symfony 8 requires PHP ≥ 8.4. Rather than upgrading the host machine's PHP (which, depending on your OS/package manager, can mean rebuilding many shared libraries), the backend runs in a `php:8.4-cli` container defined in `backend/Dockerfile` and `backend/compose.yaml`. This keeps the host environment untouched and the backend reproducible across machines.
+
+
+# Assumptions
+## back vs front
+
+I interpreted the task as requiring distinct front end system from the backend, and not using twig with react inside symfony.
+
+## Limited time
+
+I thought starting with symfony/skeleton would be an quick and easy way to start this and allow me to avoid managing a full setup. I think that caused a few issues though.
+
+I also focused on the review and architecture parts first, and thought I could get as far as I could with the code part. That left me feeling a bit crunched for time.
+
+# What you would improve given more time
+I would put more effort into the style and design.
+I would have tested it.
